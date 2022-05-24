@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -22,7 +24,6 @@ public class TechProject {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idtech_project;
 
-	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name = "id_technology")
 	@JsonBackReference(value = "technproj_technology")

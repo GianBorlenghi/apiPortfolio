@@ -1,5 +1,7 @@
 package com.apiAP.app.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,7 @@ public class ProjectController {
 	
 	@PostMapping("admin/add")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> saveProj(@RequestBody Project proj) {
+	public ResponseEntity<?> saveProj(@Valid @RequestBody Project proj) {
 		projServ.saveProject(proj);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

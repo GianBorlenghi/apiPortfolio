@@ -1,5 +1,6 @@
 package com.apiAP.app.models;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -8,9 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -28,9 +33,20 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 	private Date dateOfBirth;
 	
 	@Basic
+	@NotEmpty(message = "the field must not be empty or null")
+	@Size(min = 3 , message = "the name must have more than 3 letters")
 	private String name;
+	
+	@NotEmpty(message = "the field must not be empty or null")
 	private String surname;
+	
+	
+	
+	@NotEmpty(message = "the field must not be empty or null")
+	@Size(max = 500, message = "the description has a maximum of 500 letters")
 	private String description;
+	
+	@NotEmpty(message = "the field must not be empty or null")
 	private String city;
 	
 	@OneToMany(mappedBy = "workPerson", cascade = CascadeType.ALL)
@@ -55,9 +71,15 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 	}
 
 
-	public Person(Long idPer, Date dateOfBirth, String name, String surname, String description, String city,
-			List<WorkExperience> listWorks, List<Technology> listTech, List<Education> listEducation,
-			List<Project> listProject) {
+
+
+
+	public Person(Long idPer,Date dateOfBirth,
+			@NotEmpty(message = "the field must not be empty or null") @Size(min = 3, message = "the name must have more than 3 chars") String name,
+			@NotEmpty(message = "the field must not be empty or null") String surname,
+			@NotEmpty(message = "the field must not be empty or null") @Size(max = 500, message = "the description has a maximum of 500 chars") String description,
+			@NotEmpty(message = "the field must not be empty or null") String city, List<WorkExperience> listWorks,
+			List<Technology> listTech, List<Education> listEducation, List<Project> listProject) {
 		super();
 		this.idPer = idPer;
 		this.dateOfBirth = dateOfBirth;
@@ -70,6 +92,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 		this.listEducation = listEducation;
 		this.listProject = listProject;
 	}
+
+
+
 
 
 	public Long getIdPer() {
@@ -170,7 +195,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 	public void setListProject(List<Project> listProject) {
 		this.listProject = listProject;
 	}
-	
+
+
+
 	
 
 

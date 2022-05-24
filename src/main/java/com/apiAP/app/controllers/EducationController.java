@@ -1,5 +1,7 @@
 package com.apiAP.app.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +25,14 @@ public class EducationController {
 	
 	@PostMapping("admin/add")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> saveEdu(@RequestBody Education edu) {
+	public ResponseEntity<?> saveEdu(@Valid @RequestBody Education edu) {
 		eduService.saveEducation(edu);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@DeleteMapping("admin/delete/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> deleteEdu(@PathVariable (value = "id") Long idEducation) {
+	public ResponseEntity<?> deleteEdu(@Valid @PathVariable (value = "id") Long idEducation) {
 			eduService.deleteEducation(idEducation);
 			return new ResponseEntity<>(HttpStatus.OK);
 	}

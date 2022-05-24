@@ -13,18 +13,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Education {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idEducation;
 	
 	@Basic
+	@NotEmpty(message = "the field must not be empty or null")
 	private String name;
+	
+	@NotEmpty(message = "the field must not be empty or null")
 	private String area;
 	
 	@Temporal(TemporalType.DATE)

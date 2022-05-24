@@ -1,9 +1,14 @@
 package com.apiAP.app.controllers;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.apiAP.app.models.Education;
 import com.apiAP.app.models.Person;
@@ -33,7 +39,8 @@ public class PersonController {
 		
 	@PostMapping("admin/add")
 	@PreAuthorize("hasRole('ADMIN')")
-	public String save(@RequestBody Person per) {
+	public String save(@Valid @RequestBody Person per) {
+
 		serPer.savePerson(per);
 		return per.getName()+" ,agregado correctamente";
 	}
@@ -41,7 +48,7 @@ public class PersonController {
 	@PostMapping("admin/edit/{id}")
 	@ResponseBody
 	@PreAuthorize("hasRole('ADMIN')")
-	public void edit(@PathVariable (value = "id") Long idPerson,
+	public void edit(@Valid @PathVariable (value = "id") Long idPerson,
 					@RequestParam String dateOfBirth,
 					@RequestParam String name,
 					@RequestParam String surname,
@@ -58,7 +65,7 @@ public class PersonController {
 		per.setCity(city);
 		per.setDescription(description);
 		serPer.savePerson(per);
-		
+	
 	}
 	
 	@GetMapping("/getEducation/{id}")

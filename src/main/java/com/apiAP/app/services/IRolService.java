@@ -9,4 +9,5 @@ public interface IRolService {
 
 	public Rol findByNameRol(String name);
 	public void saveRol(Rol rol);
+	public void defaultRols();
 }

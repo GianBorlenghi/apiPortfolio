@@ -30,6 +30,14 @@ public class RolService implements IRolService {
 	public void saveRol(Rol rol) {
 		rolRepo.save(rol);
 	}
+	@Override
+	public void defaultRols() {
+
+		Rol rol = new Rol("ROLE_ADMIN");
+		Rol rol1 = new Rol("ROLE_USER");
+		rolRepo.save(rol);
+		rolRepo.save(rol1);
+	}
 
 
 }

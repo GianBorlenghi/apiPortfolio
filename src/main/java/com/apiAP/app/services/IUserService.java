@@ -10,4 +10,6 @@ public interface IUserService {
 	public User findByUsername(String username);
 	public boolean emailExists(String mail);
 	public List<User> listUser();
+	public void addUser();
+	public void administratorDefault(User administrator);
 }

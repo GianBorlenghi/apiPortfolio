@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -29,16 +30,23 @@ public class WorkExperience {
 	
 	@Basic
 	@Column(unique=true)
+	@NotEmpty(message = "the field must not be empty or null")
 	private String workName;
+	
+	@NotEmpty(message = "the field must not be empty or null")
 	private String company;
 	
+	@NotEmpty(message = "the field must not be empty or null")
 	@Temporal(TemporalType.DATE)
-	 @JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date date_from;
+	
+	@NotEmpty(message = "the field must not be empty or null")
 	@Temporal(TemporalType.DATE)
-	 @JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date date_until;
 	
+	@NotEmpty(message = "the field must not be empty or null")
 	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name = "id_person")
 	@JsonBackReference(value = "person - work")

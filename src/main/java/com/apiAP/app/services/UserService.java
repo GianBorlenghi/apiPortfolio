@@ -1,16 +1,14 @@
 package com.apiAP.app.services;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.apiAP.app.models.Rol;
 import com.apiAP.app.models.User;
 import com.apiAP.app.repositories.IUserRepo;
-
-import de.mkammerer.argon2.Argon2;
-import de.mkammerer.argon2.Argon2Factory;
-import de.mkammerer.argon2.Argon2Factory.Argon2Types;
 
 @Service
 public class UserService implements IUserService {
@@ -18,6 +16,8 @@ public class UserService implements IUserService {
 	@Autowired
 	private IUserRepo userRep;
 
+	@Autowired
+	private IRolService rolServ;
 	@Override
 	public void saveUser(User user) {
 		userRep.save(user);
@@ -51,6 +51,18 @@ public class UserService implements IUserService {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public void addUser() {
+		
+	}
+
+	@Override
+	public void administratorDefault(User administrator) {
+		Rol rol = rolServ.findByNameRol("ROLE_ADMIN");
+		administrator.setRoles(Collections.singleton(rol));
+		userRep.save(administrator);
 	}
 
 	

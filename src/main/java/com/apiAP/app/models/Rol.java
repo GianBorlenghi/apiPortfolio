@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "rols")
@@ -16,6 +17,7 @@ public class Rol {
 	private Long idRol;
 	
 	@Column(unique=true)
+	@NotEmpty(message = "the field must not be empty or null")
 	private String nombre;
 
 
@@ -27,6 +29,10 @@ public class Rol {
 		super();
 		this.idRol = id;
 		this.nombre = nombre;
+	}
+
+	public Rol(String name) {
+		this.nombre = name;
 	}
 
 	public Long getId() {

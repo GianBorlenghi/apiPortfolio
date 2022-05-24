@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -31,6 +32,7 @@ public class Project {
 	
 	@Basic
 	@Column(unique=true)
+	@NotEmpty(message = "the field must not be empty or null")
 	private String project_name;
 	
 	
