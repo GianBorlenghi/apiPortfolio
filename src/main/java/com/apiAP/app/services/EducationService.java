@@ -34,9 +34,7 @@ public class EducationService implements IEducationService {
 	@Override
 	public Education findById(Long id) {
 		return eduRepo.findById(id)
-				.orElseThrow(
-						() -> new RuntimeException("Id doesn't exists.")
-							);
+				.orElseThrow();
 		
 	}
 

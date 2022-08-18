@@ -77,5 +77,15 @@ public class PersonService implements IPersonService {
 						);
 			return per.getListProject();
 	}
+
+	@Override
+	public List<Person> getAllPerson() {
+		return repo.findAll();
+	}
+
+	@Override
+	public void deletePerson(Long id) {		
+		repo.deleteById(id);
+	}
 	
 }

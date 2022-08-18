@@ -10,7 +10,7 @@ public interface IWorkExperienceService {
 	
 	public void createWork(WorkExperience workExperience);
 	public void deleteWork(Long id);
-	public void editWork(Long id);
+	public WorkExperience findWorkById(Long id);
 	public List<WorkExperience> workList();
 
 }

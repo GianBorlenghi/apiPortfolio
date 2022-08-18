@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
@@ -38,16 +41,23 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 	private String name;
 	
 	@NotEmpty(message = "the field must not be empty or null")
+	private String country;
+	
+	@NotEmpty(message = "the field must not be empty or null")
 	private String surname;
 	
 	
 	
 	@NotEmpty(message = "the field must not be empty or null")
-	@Size(max = 500, message = "the description has a maximum of 500 letters")
+	@Column(columnDefinition = "TEXT")
 	private String description;
 	
 	@NotEmpty(message = "the field must not be empty or null")
 	private String city;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "img_id")
+    private Image img;
 	
 	@OneToMany(mappedBy = "workPerson", cascade = CascadeType.ALL)
 	@JsonManagedReference(value = "person - work")
@@ -74,12 +84,12 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 
-	public Person(Long idPer,Date dateOfBirth,
+	public Person(Long idPer,Date dateOfBirth,Image img,
 			@NotEmpty(message = "the field must not be empty or null") @Size(min = 3, message = "the name must have more than 3 chars") String name,
 			@NotEmpty(message = "the field must not be empty or null") String surname,
 			@NotEmpty(message = "the field must not be empty or null") @Size(max = 500, message = "the description has a maximum of 500 chars") String description,
 			@NotEmpty(message = "the field must not be empty or null") String city, List<WorkExperience> listWorks,
-			List<Technology> listTech, List<Education> listEducation, List<Project> listProject) {
+			List<Technology> listTech, List<Education> listEducation, List<Project> listProject,String country) {
 		super();
 		this.idPer = idPer;
 		this.dateOfBirth = dateOfBirth;
@@ -90,7 +100,25 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 		this.listWorks = listWorks;
 		this.listTech = listTech;
 		this.listEducation = listEducation;
+		this.country = country;
 		this.listProject = listProject;
+		this.img = img;
+	}
+
+
+
+
+
+	public String getCountry() {
+		return country;
+	}
+
+
+
+
+
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 
@@ -197,10 +225,14 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 	}
 
 
+	public Image getImg() {
+		return img;
+	}
 
-	
 
-
+	public void setImg(Image img) {
+		this.img = img;
+	}
 	
 	
 }

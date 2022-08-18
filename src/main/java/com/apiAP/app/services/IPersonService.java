@@ -16,6 +16,8 @@ public interface IPersonService {
 	
 	public void savePerson(Person per);
 	public void editPerson(Person per);
+	public void deletePerson(Long id);
+	public List<Person> getAllPerson();
 	public Person findByID(Long id);
 	public List  <Education> viewAllEducations(Long id);
 	public List <Technology> viewAllTechnology(Long id);

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.apiAP.app.models.WorkExperience;
 import com.apiAP.app.repositories.IWorkExperienceRepo;
 import com.apiAP.exceptions.BusinessException;
+import com.apiAP.exceptions.RequestException;
 
 @Service
 public class WorkExperienceService implements IWorkExperienceService {
@@ -26,14 +27,14 @@ public class WorkExperienceService implements IWorkExperienceService {
 
 	@Override
 	public void deleteWork(Long id) {
-		WorkExperience work = workRepo.getById(id);
-		workRepo.delete(work);
+		workRepo.deleteById(id);
 		
 	}
 
 	@Override
-	public void editWork(Long id) {
-
+	public WorkExperience findWorkById(Long id) {
+		
+		return workRepo.findById(id).orElseThrow();
 		
 	}
 

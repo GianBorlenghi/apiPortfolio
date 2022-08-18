@@ -55,7 +55,6 @@ public class MailSender {
 	public static String mailBody(String mail) {
 		String text = "Hello dear."+"\nThanks for register in my Web."+
 	"\n\nYour username will be your mail: ' "+mail+" ' "+
-				"\nIf you forgot your password, go to 'Forgot Password' in the login section and it will be reset in an email in your inbox."+
 	"\n\nThanks for all, hope you enjoy it."+
 				"\n\nBye dear.";
 		return text;

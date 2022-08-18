@@ -1,5 +1,6 @@
 package com.apiAP.app.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -16,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -31,32 +33,50 @@ public class Project {
 	private Long idproject;
 	
 	@Basic
-	@Column(unique=true)
 	@NotEmpty(message = "the field must not be empty or null")
 	private String project_name;
 	
+	@Basic
+	private String url;
+	private String urlGit;
+	
+	
+	@NotEmpty(message = "the field must not be empty or null")
+	@Column(columnDefinition = "TEXT")
+	private String description;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name = "id_person")
 	@JsonBackReference(value = "person - project")
 	private Person projectPerson;
-	
-	@OneToMany(mappedBy = "technProj", cascade = CascadeType.ALL)
-	@JsonManagedReference(value = "technproj_project")
-	private List <TechProject> listTechXProject; 
-	
 
+	@JoinTable(
+			name="tech_projects",
+			joinColumns = @JoinColumn(name ="FK_PROJECT",nullable = false),
+			inverseJoinColumns = @JoinColumn(name = "FK_TECHNOLOGY", nullable = false)
+			)
+	@ManyToMany
+	private List <Technology> listTechXProject = new ArrayList<Technology>();
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "img_id")
+    private Image img;	
+	
 	public Project() {
 		super();
 	}
 
 
-	public Project(Long idproject, String project_name, Person projectPerson, List<TechProject> listTechXProject) {
+	public Project(Long idproject, String project_name, Person projectPerson, List<Technology> listTechXProject,Image img,String url,String urlGit,String description) {
 		super();
 		this.idproject = idproject;
 		this.project_name = project_name;
 		this.projectPerson = projectPerson;
 		this.listTechXProject = listTechXProject;
+		this.img = img;
+		this.url= url; 
+		this.urlGit = urlGit;
+		this.description = description;
 	}
 
 
@@ -90,19 +110,54 @@ public class Project {
 	}
 
 
-	public List<TechProject> getListTechXProject() {
+	public List<Technology> getListTechXProject() {
 		return listTechXProject;
 	}
 
 
-	public void setListTechXProject(List<TechProject> listTechXProject) {
+	public void setListTechXProject(List<Technology> listTechXProject) {
 		this.listTechXProject = listTechXProject;
 	}
 
-	
 
-	
+	public Image getImg() {
+		return img;
+	}
 
-	
+
+	public void setImg(Image img) {
+		this.img = img;
+	}
+
+
+	public String getUrl() {
+		return url;
+	}
+
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+
+	public String getUrlGit() {
+		return urlGit;
+	}
+
+
+	public void setUrlGit(String urlGit) {
+		this.urlGit = urlGit;
+	}
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	
 }

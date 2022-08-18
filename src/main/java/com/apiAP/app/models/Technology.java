@@ -15,13 +15,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+@Table(name = "Technologies")
 public class Technology {
 	
 	@Id
@@ -29,29 +30,41 @@ public class Technology {
 	private Long idTechnology;
 	
 	@Basic
-	@Column(unique=true)
+	@Column
 	@NotEmpty(message = "the field must not be empty or null")
 	private String nameTechnology;
+	
+	@NotEmpty(message = "the field must not be empty or null")
+	private String level;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name = "id_person")
 	@JsonBackReference(value = "person - tech")
 	private Person techPerson;
+
 	
-	@OneToMany(mappedBy = "projTechn", cascade = CascadeType.ALL)
-	@JsonManagedReference(value = "technproj_technology")
-	private List <TechProject> listProjectXTech;
+	@ManyToMany(mappedBy= "listTechXProject")
+	private List<Project> projects;
 	
 	public Technology() {
 		super();
 	}
 
-	public Technology(Long idTechnology, String nameTechnology, Person techPerson, List<TechProject> listProjectXTech) {
+	public Technology(String level,Long idTechnology, String nameTechnology, Person techPerson, List<Project> projects) {
 		super();
 		this.idTechnology = idTechnology;
 		this.nameTechnology = nameTechnology;
 		this.techPerson = techPerson;
-		this.listProjectXTech = listProjectXTech;
+		this.projects = projects;
+		this.level = level;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
 	}
 
 	public Long getIdTechnology() {
@@ -78,12 +91,12 @@ public class Technology {
 		this.techPerson = techPerson;
 	}
 
-	public List<TechProject> getListProjectXTech() {
-		return listProjectXTech;
+	public List<Project> projects() {
+		return projects;
 	}
 
-	public void setListProjectXTech(List<TechProject> listProjectXTech) {
-		this.listProjectXTech = listProjectXTech;
+	public void setListProjectXTech(List<Project> projects) {
+		this.projects = projects;
 	}
 
 

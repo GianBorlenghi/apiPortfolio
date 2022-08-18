@@ -36,6 +36,11 @@ public class Education {
     @JsonFormat(pattern="yyyy-MM-dd")
 	private Date dateOfGraduation;
 	
+	@NotEmpty(message = "the field must not be empty or null")
+	private String institution;
+	@Basic
+	private int hours;
+	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name = "id_person")
 	@JsonBackReference(value = "education - person")
@@ -45,13 +50,15 @@ public class Education {
 		super();
 	}
 
-	public Education(Long idEducation, String name, String area, Date dateOfGraduation, Person educPerson) {
+	public Education(Long idEducation, String name, String area,String institution, Date dateOfGraduation, Person educPerson,int hours ) {
 		super();
 		this.idEducation = idEducation;
 		this.name = name;
 		this.area = area;
+		this.institution = institution;
 		this.dateOfGraduation = dateOfGraduation;
 		this.educPerson = educPerson;
+		this.hours = hours;
 	}
 
 	public Long getIdEducation() {
@@ -92,6 +99,22 @@ public class Education {
 
 	public void setEducPerson(Person educPerson) {
 		this.educPerson = educPerson;
+	}
+
+	public String getInstitution() {
+		return institution;
+	}
+
+	public void setInstitution(String institution) {
+		this.institution = institution;
+	}
+
+	public int getHours() {
+		return hours;
+	}
+
+	public void setHours(int hours) {
+		this.hours = hours;
 	}
 	
 	
