@@ -1,16 +1,12 @@
 package com.apiAP.app.controllers;
 
 import java.io.IOException;
-import java.nio.file.AccessDeniedException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.mail.Multipart;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +19,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -63,10 +58,10 @@ public class PersonController {
 								@RequestParam (value="city") String city,
 								@RequestParam (value="country") String country
 								) throws ParseException, IOException {
-		
+			
 		String fileName = org.springframework.util.StringUtils.cleanPath(file.getOriginalFilename());
 	    Image FileDB = new Image(fileName, file.getContentType(), file.getBytes());
-	    
+		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	    Date birth = format.parse(dateOfBirth);
 	    
@@ -81,6 +76,7 @@ public class PersonController {
 	    
 		serPer.savePerson(per);
 		return per.getName()+" ,agregado correctamente";
+		
 		
 	}
 	
@@ -118,6 +114,31 @@ public class PersonController {
 		per.setDescription(description);
 		per.setCountry(country);
 		per.setImg(FileDB);
+		serPer.savePerson(per);
+	
+	}
+	
+	@PostMapping("/admin/editKeepImg/{id}")
+	@ResponseBody
+	@PreAuthorize("hasRole('ADMIN')")
+	public void editKeepImg(@Valid @PathVariable (value = "id") Long idPerson,
+					@RequestParam("dateOfBirth") String dateOfBirth,
+					@RequestParam("name") String name,
+					@RequestParam("surname") String surname,
+					@RequestParam("description") String description,
+					@RequestParam("city") String city,
+					@RequestParam("country") String country) throws ParseException, IOException {
+		
+		Person per = serPer.findByID(idPerson);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date birth = format.parse(dateOfBirth);
+		
+		per.setName(name);
+		per.setSurname(surname);
+		per.setDateOfBirth(birth);
+		per.setCity(city);
+		per.setDescription(description);
+		per.setCountry(country);
 		serPer.savePerson(per);
 	
 	}

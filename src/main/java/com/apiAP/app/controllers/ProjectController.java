@@ -7,12 +7,14 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.apiAP.app.models.Image;
@@ -29,6 +32,7 @@ import com.apiAP.app.models.Technology;
 import com.apiAP.app.services.IImageService;
 import com.apiAP.app.services.IPersonService;
 import com.apiAP.app.services.IProjectService;
+import com.apiAP.exceptions.BusinessException;
 import com.apiAP.exceptions.RequestException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -84,7 +88,8 @@ public class ProjectController {
        projServ.saveProject(proj);
 
 		return new ResponseEntity<>("Project successfully added",HttpStatus.OK);
-	}
+
+		}
 
 	@PostMapping("admin/addWithouthImage")
 	@PreAuthorize("hasRole('ADMIN')")
@@ -119,5 +124,13 @@ public class ProjectController {
 	@GetMapping("getProject/{id}")
 	public Project getProject(@PathVariable(value = "id") Long id) {
 		return projServ.findProjectById(id);
+	}
+	
+	@DeleteMapping("deleteProject/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> deleteProject(@PathVariable(value = "id") Long id){
+		
+		projServ.deleteProject(id);
+		return new ResponseEntity<>("successfully deleted",HttpStatus.OK);
 	}
 }
