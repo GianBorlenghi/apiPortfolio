@@ -16,6 +16,7 @@ import com.apiAP.app.services.ITechProjectServ;
 
 @RestController
 @RequestMapping("/teproj")
+@CrossOrigin(origins = "https://hosting-angular-d2f7a.web.app/")
 public class TechProjectController {
 
 	@Autowired
