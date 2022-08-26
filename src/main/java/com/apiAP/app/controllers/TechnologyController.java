@@ -31,7 +31,7 @@ import io.jsonwebtoken.MalformedJwtException;
 
 @RestController
 @RequestMapping(value = "technologys")
-@CrossOrigin(value = "http://localhost:4200")
+@CrossOrigin(origins = "https://hosting-angular-d2f7a.web.app/")
 public class TechnologyController {
 	
 	@Autowired
