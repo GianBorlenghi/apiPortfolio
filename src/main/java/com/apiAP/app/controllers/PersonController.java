@@ -39,7 +39,7 @@ import com.apiAP.exceptions.UserNotFoundException;
 
 @RestController
 @RequestMapping(value = "person")
-@CrossOrigin(origins = "https://hosting-angular-d2f7a.web.app/") 
+@CrossOrigin(origins = /*"https://hosting-angular-d2f7a.web.app/"*/"*") 
 public class PersonController {
 	
 	@Autowired
