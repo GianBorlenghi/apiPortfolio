@@ -28,7 +28,7 @@ import com.apiAP.exceptions.RequestException;
 
 @RestController
 @RequestMapping("education")
-@CrossOrigin(origins = "https://hosting-angular-d2f7a.web.app/")
+@CrossOrigin(origins = /*"https://hosting-angular-d2f7a.web.app/"*/"*")
 public class EducationController {
 
 	@Autowired
