@@ -50,7 +50,7 @@ public class PersonController {
 	
 	@PostMapping("admin/add")
 	@PreAuthorize("hasRole('ADMIN')")
-	public String save(@Valid @RequestParam (value="file") MultipartFile file,
+	public ResponseEntity<?> save(@Valid @RequestParam (value="file") MultipartFile file,
 								@RequestParam(value="dateOfBirth") String dateOfBirth,
 								@RequestParam (value="name") String name,
 								@RequestParam (value="surname") String surname,
@@ -75,7 +75,7 @@ public class PersonController {
 	    per.setImg(FileDB);
 	    
 		serPer.savePerson(per);
-		return per.getName()+" ,agregado correctamente";
+		return new ResponseEntity<>("Person added",HttpStatus.OK);
 		
 		
 	}
@@ -89,7 +89,7 @@ public class PersonController {
 	@PostMapping("/admin/edit/{id}")
 	@ResponseBody
 	@PreAuthorize("hasRole('ADMIN')")
-	public void edit(@Valid @PathVariable (value = "id") Long idPerson,
+	public ResponseEntity<?> edit(@Valid @PathVariable (value = "id") Long idPerson,
 					@RequestParam(value = "file") MultipartFile file,
 					@RequestParam("dateOfBirth") String dateOfBirth,
 					@RequestParam("name") String name,
@@ -115,13 +115,13 @@ public class PersonController {
 		per.setCountry(country);
 		per.setImg(FileDB);
 		serPer.savePerson(per);
-	
+		return new ResponseEntity<>("Person edited",HttpStatus.OK);	
 	}
 	
 	@PostMapping("/admin/editKeepImg/{id}")
 	@ResponseBody
 	@PreAuthorize("hasRole('ADMIN')")
-	public void editKeepImg(@Valid @PathVariable (value = "id") Long idPerson,
+	public ResponseEntity<?> editKeepImg(@Valid @PathVariable (value = "id") Long idPerson,
 					@RequestParam("dateOfBirth") String dateOfBirth,
 					@RequestParam("name") String name,
 					@RequestParam("surname") String surname,
@@ -140,6 +140,7 @@ public class PersonController {
 		per.setDescription(description);
 		per.setCountry(country);
 		serPer.savePerson(per);
+		return new ResponseEntity<>("Person edited",HttpStatus.OK);	
 	
 	}
 	
