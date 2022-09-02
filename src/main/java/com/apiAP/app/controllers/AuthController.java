@@ -47,7 +47,7 @@ import com.apiAP.exceptions.UserNotFoundException;
 
 @RestController
 @CrossOrigin(
-	    origins = "https://hosting-angular-d2f7a.web.app/",
+	    origins = /*"https://hosting-angular-d2f7a.web.app/"*/"*",
 	    allowedHeaders = {"Content-Type", "Authorization", "Access-Control-Allow-Origin"}
 	    )
 	 
