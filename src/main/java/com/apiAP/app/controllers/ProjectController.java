@@ -40,7 +40,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/project")
-@CrossOrigin(origins = "https://hosting-angular-d2f7a.web.app/")
+@CrossOrigin(origins = /*"https://hosting-angular-d2f7a.web.app/"*/"*")
 
 public class ProjectController {
 
