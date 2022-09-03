@@ -55,7 +55,7 @@ public class WorkExperience {
 	@JsonBackReference(value = "person - work")
 	private Person workPerson;
 	
-	@OneToOne(cascade = CascadeType.REMOVE)
+	@OneToOne(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
     @JoinColumn(name = "img_id")
     private Image img;	
 
