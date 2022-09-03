@@ -58,7 +58,7 @@ public class Project {
 	@ManyToMany
 	private List <Technology> listTechXProject = new ArrayList<Technology>();
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
     @JoinColumn(name = "img_id")
     private Image img;	
 	
