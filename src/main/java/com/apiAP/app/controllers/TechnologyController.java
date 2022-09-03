@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import com.apiAP.app.models.Technology;
 import com.apiAP.app.security.JwtAuthenticationFilter;
 import com.apiAP.app.services.ITechnologyService;
 import com.apiAP.exceptions.RequestException;
+import com.apiAP.exceptions.BusinessException;
 
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -54,6 +56,8 @@ public class TechnologyController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}catch(EmptyResultDataAccessException a) {
 			throw new RequestException("Id tech not found", HttpStatus.NOT_FOUND, "p-404");
+		}catch(DataIntegrityViolationException e) {
+			throw new BusinessException("Can't delete technoolgy with id: "+id+" because it is used in a project.","p-400",HttpStatus.BAD_REQUEST);
 		}
 	}
 
