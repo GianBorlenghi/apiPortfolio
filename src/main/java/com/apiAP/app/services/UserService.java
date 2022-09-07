@@ -64,6 +64,13 @@ public class UserService implements IUserService {
 		administrator.setRoles(Collections.singleton(rol));
 		userRep.save(administrator);
 	}
+	
+		@Override
+	public void deleteUser(Long id) {
+
+		userRep.deleteById(id);
+	}
+
 
 	
 }
