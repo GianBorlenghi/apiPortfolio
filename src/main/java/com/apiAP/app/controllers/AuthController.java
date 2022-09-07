@@ -1,6 +1,7 @@
 package com.apiAP.app.controllers;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Collections;
 import java.util.Set;
 
@@ -171,6 +172,12 @@ public class AuthController {
 		}catch(NullPointerException ex) {
 			throw new UserNotFoundException("No user found", "P-404", HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@GetMapping("/getAllUsers")
+	@ResponseBody
+	public List<User> getAllUser(){
+		return userServ.listUser();
 	}
 	
 	@DeleteMapping("/admin/deleteUser/{idUser}")
