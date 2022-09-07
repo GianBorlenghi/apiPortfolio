@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -86,7 +87,7 @@ public class PersonController {
 		return serPer.getAllPerson();
 	}
 	
-	@PostMapping("/admin/edit/{id}")
+	@PutMapping("/admin/edit/{id}")
 	@ResponseBody
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> edit(@Valid @PathVariable (value = "id") Long idPerson,
@@ -101,8 +102,9 @@ public class PersonController {
 		Person per = serPer.findByID(idPerson);
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date birth = format.parse(dateOfBirth);
-		
-		imgServ.findById(per.getImg().getId());
+
+		Long id =per.getImg().getId();
+
 		
 		String fileName = org.springframework.util.StringUtils.cleanPath(file.getOriginalFilename());
 	    Image FileDB = new Image(fileName, file.getContentType(), file.getBytes());
@@ -115,10 +117,12 @@ public class PersonController {
 		per.setCountry(country);
 		per.setImg(FileDB);
 		serPer.savePerson(per);
+		imgServ.delteImg(id);
+
 		return new ResponseEntity<>("Person edited",HttpStatus.OK);	
 	}
 	
-	@PostMapping("/admin/editKeepImg/{id}")
+	@PutMapping("/admin/editKeepImg/{id}")
 	@ResponseBody
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> editKeepImg(@Valid @PathVariable (value = "id") Long idPerson,
