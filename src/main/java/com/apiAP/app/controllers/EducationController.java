@@ -60,7 +60,7 @@ public class EducationController {
 		}
 	}
 	
-	@@PutMapping("admin/editEducation/{id}")
+	@PutMapping("admin/editEducation/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> editEduc(@PathVariable(value = "id") Long idEducation,
 									  @RequestParam(value="name") String name,
