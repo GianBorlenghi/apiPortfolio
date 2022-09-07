@@ -47,7 +47,13 @@ public class User {
     @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
 	private LocalDateTime lastConnection;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(cascade =
+        {
+                CascadeType.DETACH,
+                CascadeType.MERGE,
+                CascadeType.REFRESH,
+                CascadeType.PERSIST
+        },fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "user_roles",
 			joinColumns = @JoinColumn(name = "id_user", referencedColumnName = "idUser"),
